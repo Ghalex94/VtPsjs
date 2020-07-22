@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rBoleto" pageWidth="226" pageHeight="841" columnWidth="186" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="302c6a9c-48a7-45ce-acec-1bf95af64fe2">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="338"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="657"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Pasajes"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="mm"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="mm"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="prmtNasiento" class="java.lang.Integer"/>
+	<parameter name="prmtPrecioLetras" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[select p.nombre, pt.dnipasajero, p.razsocial, p.ruc, vt.fpartida, pt.prepasaje, vt.idorigen, orgn.sede Origen, vt.iddestino, dstn.sede Destino, vt.nviaje, pt.nboleto
+from tb_pasajeros_temporal pt
+inner join tb_venta_temporal vt on vt.id = 1
+inner join tb_pasajero p on p.dnipasajero = pt.dnipasajero
+inner join tb_sedes orgn on orgn.idsede = vt.idorigen
+inner join tb_sedes dstn on dstn.idsede = vt.iddestino
+where pt.asiento =  $P{prmtNasiento}]]>
+	</queryString>
+	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_pasajero"/>
+	</field>
+	<field name="dnipasajero" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="dnipasajero"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_pasajeros_temporal"/>
+	</field>
+	<field name="razsocial" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="razsocial"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_pasajero"/>
+	</field>
+	<field name="ruc" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ruc"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_pasajero"/>
+	</field>
+	<field name="fpartida" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="fpartida"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_venta_temporal"/>
+	</field>
+	<field name="prepasaje" class="java.lang.Float">
+		<property name="com.jaspersoft.studio.field.label" value="prepasaje"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_pasajeros_temporal"/>
+	</field>
+	<field name="idorigen" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="idorigen"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_venta_temporal"/>
+	</field>
+	<field name="Origen" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Origen"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_venta_temporal"/>
+	</field>
+	<field name="iddestino" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="iddestino"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_venta_temporal"/>
+	</field>
+	<field name="Destino" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_venta_temporal"/>
+		<property name="com.jaspersoft.studio.field.label" value="Destino"/>
+	</field>
+	<field name="nviaje" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="nviaje"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_venta_temporal"/>
+	</field>
+	<field name="nboleto" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="nboleto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_pasajeros_temporal"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="281" splitType="Stretch">
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="0" y="70" width="160" height="22" uuid="f8590a90-30e1-480c-922c-31b1e8942eb2"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="0" y="90" width="90" height="20" uuid="29ef3232-bbc6-4cd6-9bf8-feee39c210b7"/>
+				<textElement verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dnipasajero}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="0" y="110" width="180" height="20" uuid="afb5f8e4-eecf-40c0-91cc-74aa9d006f3b"/>
+				<textElement verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{razsocial}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="0" y="102" width="110" height="20" uuid="a1461511-f4db-4ed1-bcba-0d67fdab89dc"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ruc}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="0" y="145" width="180" height="20" uuid="8b0392b8-a7ab-48b6-a808-3e67f5123201"/>
+				<textElement verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fpartida}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="0" y="168" width="1" height="20" uuid="7eb71433-0ce6-4597-9b63-f4d512450929"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["S/ " + $F{prepasaje} + "0"]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="0" y="191" width="180" height="20" uuid="aa10e588-5fa9-46e6-a6e8-ba34676ae2ef"/>
+				<textElement verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Origen}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="0" y="212" width="180" height="23" uuid="deaab8dd-d07d-4b87-b1c5-c2c851750f4e"/>
+				<textElement verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Destino}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="130" y="238" width="30" height="30" forecolor="#000000" uuid="69bb42c8-1c73-41c1-91ac-429f4de267a6"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nboleto}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="60" y="238" width="10" height="30" forecolor="#000000" uuid="6ba4b382-31e8-4148-91eb-b2ed49df20cc"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{prmtNasiento}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="50" y="168" width="130" height="20" uuid="2c1ddaf5-5891-43d3-b875-919d684104b4"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{prmtPrecioLetras}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

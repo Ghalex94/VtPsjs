@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpManifiestoPasajeros" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7f24c649-e679-403b-bda9-9a98c125134d">
+	<subDataset name="Empty Dataset1" uuid="b339fef6-4a0a-4293-b3d9-b0f3594c3535"/>
+	<parameter name="nviaje" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select  e.empresa, e.ruc, e.direccion, orgn.sede Origen, dstn.sede Destino, DATE_FORMAT(vt.fpartida, '%d-%m-%Y') Fecha_Viaje, TIME(vt.fpartida) Hora_Salida, mvh.casientos, c.conductor, c.licencia, vh.placa, mvh.modelo, dvt.asiento, p.nombre, dvt.dnipasajero, dvt.nboleto, p.nacionalidad, dvt.prepasaje,"DNI" 
+from  tb_detalle_viaje dvt
+inner join  tb_pasajero p on p.dnipasajero = dvt.dnipasajero
+inner join  tb_viaje vt on  vt.nviaje = dvt.nviaje
+inner join tb_sedes orgn on orgn.idsede = vt.idorigen
+inner join tb_sedes dstn on dstn.idsede = vt.iddestino
+inner join  tb_conductor c on c.dniconductor = vt.dniconductor
+inner join  tb_vehiculo vh on  vh.placa = vt.placa
+inner join  tb_modelo_vehiculo mvh on mvh.idmodelo = vh.idmodelo
+inner join  tb_empresa e on e.idempresa = vt.empresa
+where vt.nviaje =  $P{nviaje} 
+order by dvt.asiento]]>
+	</queryString>
+	<field name="Origen" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Origen"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_sedes"/>
+	</field>
+	<field name="Destino" class="java.lang.String">
+		<property name="net.sf.jasperreports.jdbc.time.zone" value=""/>
+		<property name="com.jaspersoft.studio.field.label" value="Destino"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_sedes"/>
+	</field>
+	<field name="Fecha_Viaje" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="Fecha_Viaje"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_viaje"/>
+	</field>
+	<field name="Hora_salida" class="java.sql.Time">
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_viaje"/>
+		<property name="com.jaspersoft.studio.field.label" value="Hora_Salida"/>
+	</field>
+	<field name="conductor" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="conductor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_conductor"/>
+	</field>
+	<field name="dnipasajero" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="dnipasajero"/>
+	</field>
+	<field name="nboleto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nboleto"/>
+	</field>
+	<field name="asiento" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="asiento"/>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_pasajero"/>
+	</field>
+	<field name="prepasaje" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="prepasaje"/>
+	</field>
+	<field name="ruc" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ruc"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_empresa"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="110" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="330" y="0" width="226" height="28" forecolor="#0A8060" backcolor="rgba(255, 255, 255, 0.0)" uuid="d8fa6562-e2b7-4e78-8dda-b95417f6149c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MANIFIESTO DE PASAJEROS]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="330" y="60" width="226" height="30" uuid="f00de49f-aaa1-4cbf-9a3e-9f16a18de78a"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Fecha_Viaje}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="330" y="30" width="226" height="20" forecolor="#0A8060" uuid="dcdd18e7-7e8f-478d-86f9-b8691a8a78bf"/>
+				<textElement textAlignment="Center">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ruc}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="89" splitType="Stretch">
+			<textField>
+				<reportElement x="220" y="5" width="100" height="30" uuid="325c1e19-8ded-4c87-843e-7865ec4d22d9"/>
+				<textFieldExpression><![CDATA[$F{Origen}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="354" y="10" width="100" height="30" uuid="bd8f7be9-5a73-44d5-b243-426b8e931b1f"/>
+				<textFieldExpression><![CDATA[$F{conductor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="10" width="100" height="30" uuid="5d1f374e-ccfd-4c09-aa85-0a3d89d504a2"/>
+				<textFieldExpression><![CDATA[$F{Destino}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="-10" y="0" width="100" height="30" uuid="93a24a96-a73e-4d48-b6bd-bc7742e5ebb6"/>
+				<textFieldExpression><![CDATA[$F{Hora_salida}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="449" y="59" width="100" height="30" uuid="cdfbadd2-13f4-45bf-95bc-073608f83184"/>
+				<textFieldExpression><![CDATA[$F{nboleto}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="106" y="0" width="100" height="30" uuid="4098d3f7-f3a2-46b2-8fc4-5a9adff1d7f4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6c8b5e7e-304b-45c3-a145-fbe218b7a1a4"/>
+				</reportElement>
+				<text><![CDATA[dnipasajero]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="0" width="100" height="30" uuid="562bae4b-54d7-4f00-905c-67e96471b898">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="51dfc9b3-52c3-4536-8329-c8a0a2b1aaca"/>
+				</reportElement>
+				<text><![CDATA[nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="30" uuid="59a50009-8069-452e-9f73-9586bbdd72df">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f6fc233e-5617-409e-856e-67c37fe3463a"/>
+				</reportElement>
+				<text><![CDATA[asiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="410" y="0" width="100" height="30" uuid="60b1ebda-c2d5-4fa6-af2a-b895d66989e8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d3546888-9bd8-4b43-9371-b2e9802e3e63"/>
+				</reportElement>
+				<text><![CDATA[prepasaje]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="1" width="100" height="30" uuid="49280138-aeb0-4f9d-bec4-e01a6f250642">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="adae9d17-010b-4c79-ae44-deab9fa049fe"/>
+				</reportElement>
+				<text><![CDATA[nboleto]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="106" y="20" width="100" height="30" uuid="d135a8d6-7a77-421e-967b-d4c105e54450">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6c8b5e7e-304b-45c3-a145-fbe218b7a1a4"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{dnipasajero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="35" width="100" height="30" uuid="f95a9f7d-1f59-41bf-899e-eacb6fb2571a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="51dfc9b3-52c3-4536-8329-c8a0a2b1aaca"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="5" width="100" height="30" uuid="34383bc3-10f0-487f-babd-ae678eb364be">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f6fc233e-5617-409e-856e-67c37fe3463a"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{asiento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="410" y="45" width="100" height="30" uuid="bdf22fa1-9e82-4f87-b2a9-8393bad63798">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d3546888-9bd8-4b43-9371-b2e9802e3e63"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{prepasaje}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="210" y="34" width="100" height="30" uuid="2d071f49-810f-4a59-9917-4a1ac84942ce">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="adae9d17-010b-4c79-ae44-deab9fa049fe"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nboleto}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="216" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

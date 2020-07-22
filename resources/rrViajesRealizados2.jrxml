@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rrViajesRealizados" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7a5c9b49-9dc5-422a-ac69-e92cf61ef530">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="db_venta_pasajes"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="prtFechaI" class="java.sql.Timestamp"/>
+	<parameter name="prtFechaF" class="java.sql.Timestamp"/>
+	<parameter name="codsocio" class="java.lang.Integer"/>
+	<queryString language="SQL">
+		<![CDATA[select (SELECT ifnull(SUM(prepasaje),0) FROM tb_detalle_viaje where nviaje=v.nviaje GROUP BY nviaje) as totpasajes,(SELECT ifnull(COUNT(dnipasajero),0) FROM tb_detalle_viaje where nviaje=v.nviaje GROUP BY nviaje) as asientosven, v.nviaje, v.codsocio, s.nombresocio, v.dniconductor, c.conductor, v.placa, e.empresa, orgn.sede Origen, dstn.sede Destino, v.fpartida, v.fllegada, v.totalasientos, v.prepasaje
+from tb_viaje v
+inner join tb_socio s 		on s.codsocio	= v.codsocio
+inner join tb_empresa e 	on e.idempresa 	= v.empresa
+inner join tb_sedes orgn 	on orgn.idsede 	= v.idorigen
+inner join tb_sedes dstn 	on dstn.idsede 	= v.iddestino
+inner join  tb_conductor c 	on c.dniconductor = v.dniconductor
+where (fpartida between $P{prtFechaI}  and $P{prtFechaF}) and s.codsocio= $P{codsocio} ]]>
+	</queryString>
+	<field name="nviaje" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="nviaje"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_viaje"/>
+	</field>
+	<field name="codsocio" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codsocio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_viaje"/>
+	</field>
+	<field name="nombresocio" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nombresocio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_socio"/>
+	</field>
+	<field name="dniconductor" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="dniconductor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_viaje"/>
+	</field>
+	<field name="conductor" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="conductor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_conductor"/>
+	</field>
+	<field name="placa" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="placa"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_viaje"/>
+	</field>
+	<field name="empresa" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="empresa"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_empresa"/>
+	</field>
+	<field name="Origen" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Origen"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_sedes"/>
+	</field>
+	<field name="Destino" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Destino"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_sedes"/>
+	</field>
+	<field name="fpartida" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="fpartida"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_viaje"/>
+	</field>
+	<field name="fllegada" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="fllegada"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_viaje"/>
+	</field>
+	<field name="asientosven" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="asientosven"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_viaje"/>
+	</field>
+	<field name="totalasientos" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="totalasientos"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_viaje"/>
+	</field>
+	<field name="prepasaje" class="java.lang.Float">
+		<property name="com.jaspersoft.studio.field.label" value="prepasaje"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_viaje"/>
+	</field>
+	<field name="totpasajes" class="java.lang.Float">
+		<property name="com.jaspersoft.studio.field.label" value="totpasajes"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_viaje"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="102" splitType="Stretch">
+			<image vAlign="Middle">
+				<reportElement x="725" y="0" width="77" height="102" uuid="651ccc4b-e999-40fe-bcbf-1f25bcfc98af"/>
+				<imageExpression><![CDATA["cherry.jpg"]]></imageExpression>
+			</image>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="721" height="80" backcolor="#292929" uuid="d8d9e644-3a32-491d-97cb-a277aff17133"/>
+				<staticText>
+					<reportElement style="Title" x="0" y="0" width="710" height="80" uuid="27d8f6ee-f0a9-44f6-a160-1763c3b00f30"/>
+					<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="44" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Reporte de Viajes realizados]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="82" width="721" height="20" forecolor="#000000" backcolor="#0A8060" uuid="b0c895f6-6dbd-477d-9858-9ad66af087e1"/>
+				<textField textAdjust="StretchHeight" pattern="EEEEE dd MMMMM yyyy">
+					<reportElement x="550" y="0" width="154" height="20" forecolor="#FFFFFF" uuid="a33fce3b-20c1-4696-873a-fe134d1e7d88"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="0" y="0" width="30" height="20" forecolor="#000000" uuid="7fd6e4e3-4bb6-43ac-8032-ead317e22aa4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c0f44a1d-9dc0-486b-80d3-a8b8bf2ca5a7"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="Century Gothic" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nro VIAJE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="36" y="0" width="120" height="20" forecolor="#000000" uuid="f97468e4-2649-40b9-a267-7f44b5bbfdaf">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d09ffdb0-3085-440c-9b55-9b64da46a480"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="Century Gothic" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SOCIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="160" y="0" width="120" height="20" forecolor="#000000" uuid="01ba0493-2fe6-4d4f-9fb0-7b7d91282543">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="72270b0d-a446-49ff-8495-7c13ce6384e0"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="Century Gothic" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONDUCTOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="284" y="0" width="42" height="20" forecolor="#000000" uuid="c1dd434d-c793-4ea0-afc6-f41277467638">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d96b62d2-451b-49df-a782-fa73be616c3c"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="Century Gothic" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PLACA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="331" y="0" width="75" height="20" forecolor="#000000" uuid="dac40092-9c75-4135-aab3-a3f51861ae2f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a535b124-affd-4069-843f-3386723d3894"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="Century Gothic" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EMPRESA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="411" y="0" width="50" height="20" forecolor="#000000" uuid="9a735ead-eb50-44ec-8065-e2236d488aef">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7e837b81-8a58-4228-a8a1-4c7870217bd7"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="Century Gothic" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ORIGEN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="466" y="0" width="50" height="20" forecolor="#000000" uuid="dc0136aa-f16c-433b-b222-72d68f74f3cd">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c07ec7e7-4262-437a-864a-0afde3232624"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="Century Gothic" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESTINO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="521" y="0" width="69" height="20" forecolor="#000000" uuid="ce52f2f9-17f1-4c95-bbdd-c84be8a8932b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="951bbded-55ba-4178-85a8-fc0fe6102958"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="Century Gothic" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[F. PARTIDA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="600" y="0" width="65" height="20" forecolor="#000000" uuid="d0c68ec8-4f38-4354-a162-99f47d1563d5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c03a8807-f516-46ee-b567-cd0642f6fcc5"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="Century Gothic" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[F. LLEGADA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="680" y="0" width="49" height="20" forecolor="#000000" uuid="a88e5af1-e23c-435f-95be-7cff93c22539">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="52ee9152-8e55-4ef0-be1d-1a5d222242df"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Century Gothic" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ASIENTOS VENDIDOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="740" y="0" width="57" height="20" forecolor="#000000" uuid="af2c495b-f9fe-4209-a18d-c2ef100812c9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2af237e7-fcec-4885-a8f1-d7fabb2f9d52"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Century Gothic" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL PASAJES S/]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="21" width="800" height="1" forecolor="#292929" uuid="82dfcd03-d957-4bd4-a12a-dfb6f3bbfa53"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Solid" lineColor="#292929"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="797" height="18" uuid="34a2ae4b-4055-476b-8676-d499f6af510b"/>
+				<textField>
+					<reportElement style="Detail" positionType="Float" x="0" y="0" width="30" height="18" uuid="473d4137-48fe-46d7-b16f-943a602104e1">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c0f44a1d-9dc0-486b-80d3-a8b8bf2ca5a7"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nviaje}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" positionType="Float" x="36" y="0" width="120" height="18" uuid="d88b0734-4943-45c3-a23e-0bfddf89d910">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d09ffdb0-3085-440c-9b55-9b64da46a480"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{codsocio} + " - " + $F{nombresocio}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" positionType="Float" x="160" y="0" width="120" height="18" uuid="e560e210-c6f2-4ed5-b699-7e86a8ce44c4">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="72270b0d-a446-49ff-8495-7c13ce6384e0"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{dniconductor} + " - " + $F{conductor}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" positionType="Float" x="284" y="0" width="42" height="18" uuid="cf7f6d9c-3739-43c8-9fdd-b75600461acb">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d96b62d2-451b-49df-a782-fa73be616c3c"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{placa}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" positionType="Float" x="331" y="0" width="75" height="18" uuid="122e9c9f-f0aa-43d9-ba31-9a617fdef07a">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a535b124-affd-4069-843f-3386723d3894"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{empresa}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" positionType="Float" x="411" y="0" width="50" height="18" uuid="2ebc1959-eb03-4b78-87de-1e1dfad44ccd">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7e837b81-8a58-4228-a8a1-4c7870217bd7"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Origen}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" positionType="Float" x="466" y="0" width="50" height="18" uuid="f2836686-986e-493e-9b6b-cfa9d6723ef1">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c07ec7e7-4262-437a-864a-0afde3232624"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Destino}]]></textFieldExpression>
+				</textField>
+				<textField pattern="d/M/yy h:mm a">
+					<reportElement style="Detail" positionType="Float" x="521" y="0" width="69" height="18" uuid="4bacc496-2886-43e3-b005-6887edf398b4">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="951bbded-55ba-4178-85a8-fc0fe6102958"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{fpartida}]]></textFieldExpression>
+				</textField>
+				<textField pattern="d/M/yy h:mm a">
+					<reportElement style="Detail" positionType="Float" x="600" y="0" width="65" height="18" uuid="e17285b4-ea03-4f5b-9bba-7d18039630cf">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c03a8807-f516-46ee-b567-cd0642f6fcc5"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{fllegada}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" positionType="Float" x="680" y="0" width="49" height="18" uuid="18a7ce57-cd3d-4372-8602-573aebc6b98f">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="52ee9152-8e55-4ef0-be1d-1a5d222242df"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{asientosven}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" positionType="Float" x="740" y="0" width="57" height="18" uuid="34c4f5ce-ceca-42c3-b432-fdeb31dc2ff0">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2af237e7-fcec-4885-a8f1-d7fabb2f9d52"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{totpasajes}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="9" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="800" height="1" forecolor="#292929" uuid="501ac6c4-e9d4-43cb-ba6b-7f2f44394cf3"/>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Solid" lineColor="#292929"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="802" height="25" forecolor="#D0B48E" backcolor="#000000" uuid="ffb10ec8-0371-4545-8eaa-96d62ad3cec0"/>
+				<textField textAdjust="StretchHeight" evaluationTime="Report">
+					<reportElement style="Column header" x="757" y="3" width="40" height="20" forecolor="#FFFFFF" uuid="b5521ea6-5f36-4864-856f-58d0bcd011f2"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight">
+					<reportElement style="Column header" x="677" y="3" width="80" height="20" forecolor="#FFFFFF" uuid="e625ea3c-1741-4cfe-81cf-fbbdd00162c8"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="2" y="3" width="197" height="20" forecolor="#FFFFFF" uuid="0c9f7e91-d3f5-47f9-82b7-0b2b3a43a5d6"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Century Gothic" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

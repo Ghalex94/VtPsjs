@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rPrueba" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="13acf49e-4913-4d1b-bccc-113817ad15d1">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="241"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="754"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="db_venta_pasajes"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="nviaje" class="java.lang.Integer"/>
+	<queryString language="SQL">
+		<![CDATA[select vt.idorigen, orgn.sede Origen, vt.iddestino, dstn.sede Destino, DATE_FORMAT(vt.fpartida, '%d-%m-%Y') Fecha_Viaje,  TIME(vt.fpartida) Hora_Salida, mvh.casientos, c.conductor, c.licencia, vh.placa, mvh.modelo, vh.mtc, dvt.asiento, p.nombre, dvt.dnipasajero, dvt.edad, dvt.nboleto, p.nacionalidad, dvt.prepasaje
+from  tb_detalle_viaje dvt
+inner join  tb_pasajero p on p.dnipasajero = dvt.dnipasajero
+inner join  tb_viaje vt on  vt.nviaje = dvt.nviaje
+inner join tb_sedes orgn on orgn.idsede = vt.idorigen
+inner join tb_sedes dstn on dstn.idsede = vt.iddestino
+inner join  tb_conductor c on c.dniconductor = vt.dniconductor
+inner join  tb_vehiculo vh on  vh.placa = vt.placa
+inner join  tb_modelo_vehiculo mvh on mvh.idmodelo = vh.idmodelo
+inner join  tb_empresa e on e.idempresa = vt.empresa
+where vt.nviaje =  $P{nviaje} 
+order by dvt.asiento]]>
+	</queryString>
+	<field name="idorigen" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="idorigen"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_venta_temporal"/>
+	</field>
+	<field name="Origen" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_venta_temporal"/>
+		<property name="com.jaspersoft.studio.field.label" value="Origen"/>
+	</field>
+	<field name="iddestino" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="iddestino"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_venta_temporal"/>
+	</field>
+	<field name="Destino" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Destino"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_venta_temporal"/>
+	</field>
+	<field name="Fecha_Viaje" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Fecha_Viaje"/>
+	</field>
+	<field name="Hora_Salida" class="java.sql.Time">
+		<property name="com.jaspersoft.studio.field.label" value="Hora_Salida"/>
+	</field>
+	<field name="casientos" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="casientos"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_modelo_vehiculo"/>
+	</field>
+	<field name="conductor" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="conductor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_conductor"/>
+	</field>
+	<field name="licencia" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="licencia"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_conductor"/>
+	</field>
+	<field name="placa" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="placa"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_vehiculo"/>
+	</field>
+	<field name="modelo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="modelo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_modelo_vehiculo"/>
+	</field>
+	<field name="mtc" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="mtc"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_empresa"/>
+	</field>
+	<field name="asiento" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="asiento"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_pasajeros_temporal"/>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_pasajero"/>
+	</field>
+	<field name="dnipasajero" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="dnipasajero"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_pasajeros_temporal"/>
+	</field>
+	<field name="edad" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="edad"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_pasajeros_temporal"/>
+	</field>
+	<field name="nboleto" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="nboleto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_pasajeros_temporal"/>
+	</field>
+	<field name="nacionalidad" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nacionalidad"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_pasajero"/>
+	</field>
+	<field name="prepasaje" class="java.lang.Float">
+		<property name="com.jaspersoft.studio.field.label" value="prepasaje"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_pasajeros_temporal"/>
+	</field>
+	<field name="nviaje" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="nviaje"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_venta_temporal"/>
+	</field>
+	<variable name="prepasaje1" class="java.lang.Float" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{prepasaje}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="217" splitType="Stretch">
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="24" y="20" width="101" height="30" uuid="de05cc3b-21bf-4b81-8eb1-58395eff9c27"/>
+				<imageExpression><![CDATA["merma.jpg"]]></imageExpression>
+			</image>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="491" y="20" width="72" height="30" uuid="7b5d2447-ada9-41b0-abb9-f6b0c6dc1ab2"/>
+				<imageExpression><![CDATA["minivan.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement mode="Opaque" x="125" y="22" width="366" height="28" forecolor="#FFFFFF" backcolor="#0A8060" uuid="474556c7-507a-4af4-9d47-4b1d273e1650"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MANIFIESTO DE PASAJEROS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="15" splitType="Prevent">
+			<property name="com.jaspersoft.studio.layout"/>
+			<frame>
+				<reportElement style="Row" mode="Transparent" x="30" y="-19" width="380" height="16" uuid="b50221b5-8254-440b-8c6f-1f0b138c9259">
+					<property name="com.jaspersoft.studio.layout"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textField>
+					<reportElement style="Detail" positionType="Float" isPrintRepeatedValues="false" x="40" y="-93" width="70" height="18" uuid="554c4f1d-dae6-4eaa-b215-340c253eda5f">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c077376e-249b-4697-b8ec-1d8eba1926d4"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Origen}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" positionType="Float" isPrintRepeatedValues="false" x="150" y="-93" width="80" height="18" uuid="31d82194-f8a9-453a-a12a-fa1d1e8a3e37">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9b458c01-82dc-4ca7-9f8b-2bdc8bb7a015"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Destino}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" positionType="Float" isPrintRepeatedValues="false" x="320" y="-93" width="59" height="18" uuid="a82c8c48-519e-4155-8788-cc2c0493319b">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bd555ee6-40a2-4a72-96c1-013afc43e33a"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Fecha_Viaje}]]></textFieldExpression>
+				</textField>
+				<textField pattern="h:mm a">
+					<reportElement style="Detail" positionType="Float" isPrintRepeatedValues="false" x="45" y="-72" width="50" height="18" uuid="9d3fe21c-c9df-4d53-84e3-7865c94f35f4">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ad418031-f384-4475-a00d-a8963f9970ab"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Hora_Salida}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" positionType="Float" isPrintRepeatedValues="false" x="320" y="-72" width="60" height="18" uuid="fe8d5995-0d02-4ba9-a7f9-eb67da82b3c6">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e652f3ed-3117-4388-a0c0-fdb4d0e44ae3"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{casientos}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" positionType="Float" isPrintRepeatedValues="false" x="25" y="-51" width="204" height="18" uuid="8c7defc9-6567-4032-a2a4-9242c9dfc421">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dac1ff79-67a4-4741-9baf-0fb2ecd1a265"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{conductor}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" positionType="Float" isPrintRepeatedValues="false" x="320" y="-51" width="59" height="18" uuid="cef4b99d-a6b0-4dc2-b2fd-667229b872c2">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="773097e1-c3f5-4b89-9f60-33f0d56d33f4"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{licencia}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" positionType="Float" isPrintRepeatedValues="false" x="85" y="-31" width="50" height="18" uuid="f5f9ac7e-6f3b-4860-9b07-526a0a3367b1">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="89079640-e5bd-45ee-ad7d-f367f53f1124"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{placa}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" positionType="Float" isPrintRepeatedValues="false" x="135" y="-49" width="130" height="18" uuid="5ba11dbf-72af-49e7-80de-7fcf700c8c39">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a3a39a71-aec3-41b2-b34e-a9675d506a60"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{modelo}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" positionType="Float" isPrintRepeatedValues="false" x="325" y="-31" width="54" height="18" uuid="06499e11-7ce4-483b-9043-9c2309b2b8bf">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ef88ca67-46c0-482a-9380-a7c31e5a0836"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{mtc}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" positionType="Float" x="0" y="2" width="23" height="14" uuid="84f8ae45-8c64-45e6-8a09-ad1e1fbf68fc">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="64b8bcd9-de2c-46d2-b076-7632f98ca0dc"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="6" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{asiento}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" positionType="Float" x="30" y="2" width="171" height="14" uuid="3d4a1c09-3ae7-46ed-a786-245dca20f7d3">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b39e82ec-d6f5-4880-b72b-9286f4b77d51"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="6" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" positionType="Float" x="201" y="2" width="40" height="14" uuid="08d21e77-c5bf-4f99-b077-3ec3375f6708">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5c7f7db4-6e5f-45ca-b85a-4fc69e790bef"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="6" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{dnipasajero}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" positionType="Float" x="244" y="2" width="26" height="14" uuid="c3ba1bce-3655-4171-9767-ae7e69286dcc">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="708993ed-0414-4d07-a98d-9c8ec27c15a7"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="6" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{edad}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" positionType="Float" x="270" y="2" width="40" height="14" uuid="842cdda3-7668-491a-ac02-8bff6767355f">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="95576986-7c89-4154-868d-087d990508a7"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="6" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nboleto}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" positionType="Float" x="310" y="2" width="50" height="14" uuid="2c7c1aab-de34-4e7d-97e1-8eea7a75868c">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="acea6551-0edf-4d83-bfb4-493d58643b93"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="6" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nacionalidad}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" positionType="Float" x="360" y="2" width="20" height="14" uuid="fd864c85-ca88-4396-868d-bed46809acd4">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3220fd45-a04c-46e9-b9ab-5993032ea182"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="6" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["S/" + $F{prepasaje} + "0"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" positionType="Float" isPrintRepeatedValues="false" x="180" y="-72" width="30" height="18" uuid="3537375e-85d3-4384-a63d-3dd006c4661f">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e652f3ed-3117-4388-a0c0-fdb4d0e44ae3"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{cantPasajeros}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+</jasperReport>

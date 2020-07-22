@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rpManifiestoPasajeros" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7f24c649-e679-403b-bda9-9a98c125134d">
+	<parameter name="nviaje" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select vt.idorigen, orgn.sede Origen, vt.iddestino, dstn.sede Destino, DATE_FORMAT(vt.fpartida, '%d-%m-%Y') Fecha_Viaje,  TIME(vt.fpartida) Hora_Salida, mvh.casientos, c.conductor, c.licencia, vh.placa, mvh.modelo, vh.mtc, dvt.asiento, p.nombre, dvt.dnipasajero, dvt.edad, dvt.nboleto, p.nacionalidad, dvt.prepasaje
+from  tb_detalle_viaje dvt
+inner join  tb_pasajero p on p.dnipasajero = dvt.dnipasajero
+inner join  tb_viaje vt on  vt.nviaje = dvt.nviaje
+inner join tb_sedes orgn on orgn.idsede = vt.idorigen
+inner join tb_sedes dstn on dstn.idsede = vt.iddestino
+inner join  tb_conductor c on c.dniconductor = vt.dniconductor
+inner join  tb_vehiculo vh on  vh.placa = vt.placa
+inner join  tb_modelo_vehiculo mvh on mvh.idmodelo = vh.idmodelo
+inner join  tb_empresa e on e.idempresa = vt.empresa
+where vt.nviaje = 6
+order by dvt.asiento]]>
+	</queryString>
+	<field name="Origen" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Origen"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_sedes"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="47" splitType="Stretch">
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="9" y="8" width="101" height="30" uuid="e31df78a-1f00-4617-9d1f-68e5a4ae5c62"/>
+				<imageExpression><![CDATA["/resources/merma.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement mode="Opaque" x="110" y="10" width="366" height="28" forecolor="#FFFFFF" backcolor="#0A8060" uuid="d8fa6562-e2b7-4e78-8dda-b95417f6149c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MANIFIESTO DE PASAJEROS]]></text>
+			</staticText>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="476" y="8" width="72" height="30" uuid="55d9f8d8-1b02-4697-a6cc-4df5808f20b2"/>
+				<imageExpression><![CDATA["/resources/minivan.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<textField>
+				<reportElement x="73" y="20" width="100" height="30" uuid="325c1e19-8ded-4c87-843e-7865ec4d22d9"/>
+				<textFieldExpression><![CDATA[$F{Origen}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
